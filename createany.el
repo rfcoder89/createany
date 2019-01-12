@@ -1,14 +1,9 @@
-(setq createany--root-map (make-hash-table :test 'equal))
-
-(puthash
- "NPM module"
- '(lambda ()
-    (message "Helllo"))
-         createany--root-map)
-
 (defun createany ()
   (interactive)
-  (funcall
-   (gethash (completing-read (format "%s" default-directory)  createany--root-map nil t) createany--root-map)))
+  (let ((filename (read-file-name "Create file: " default-directory)))
+    (if (file-exists-p filename)
+      (message "File already exists!")
+      (find-file filename)
+      (ivy-yasnippet))))
 
 (provide 'createany)
